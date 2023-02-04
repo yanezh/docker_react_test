@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t yanezh/react-test -f Dockerfile.dev .
-      - run: docker run -e CI=true yanezh/react-test npm test
+      - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
+      - run: docker run -e CI=true cygnetops/react-test npm test
  
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
@@ -21,9 +21,10 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: docker-react
-          environment_name: Dockerreact-env
+          application_name: docker-react-try2
+          environment_name: Dockerreacttry2-env
           existing_bucket_name: elasticbeanstalk-eu-north-1-687400471566
           region: eu-north-1
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
+          use_existing_version_if_available: true
